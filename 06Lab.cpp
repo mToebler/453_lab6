@@ -92,9 +92,9 @@ int main()
 
     do {
         input = DisplayMenu();
-
-        std:: cout << "Enter a number: ";
-        std::cin >> input;
+        
+        // std:: cout << "Enter a number: ";
+        // std::cin >> input;
 
         if (input == "1") {
             ValidTests();
