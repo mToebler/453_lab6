@@ -2,11 +2,10 @@
 #include <string>
 
 
-std::string GetAuthenticationQuery(std::string username, std::string password) {
-    std::string query = "";
-
-
-
+std::string GetAuthenticationQuery(std::string username, std::string password) { 
+    std::string query = "SELECT authenticate FROM passwordList WHERE name = '"
+        + username + "' AND passwd = '"
+        + password + "';";    
     return query;
 }
 
@@ -22,6 +21,21 @@ void TautologyAttackTests() {
 
 
 void UnionQueryAttackTests() {
+    // Test #1. Selects all credentials with elevated privleges
+    // Assumes a column permissionLevel of NUMBER type in
+    // passwordList table.
+    std::string username = "some_user";
+    std::string password = "password' UNION SELECT authenticate FROM passwordList WHERE permissionLevel > 0 and name like '%";
+    std::string query = GetAuthenticationQuery(username, password);
+    // print query?
+    std::cout << "\nTEST 1: " + query;
+
+    // Test #2. returns a valid authenticate token for the admin 
+    // account if it exists
+    username = "SYSTEM";
+    password = "plainTextPassword' UNION SELECT authenticate FROM passwordList WHERE name = 'admin"; 
+    query = GetAuthenticationQuery(username, password);
+    std::cout << "\n\nTEST 2: " + query;
 
 }
 
@@ -32,7 +46,7 @@ void AdditionalStatementAttackTests() {
     std::string username = "user";
     std::string password = "password'; DROP TABLE Users";
     GetAuthenticationQuery(username, password);
-
+    
     //test #2. Inserts a new user to the database.
     username = "user";
     password = "password'; INSERT INTO Users (name, password) VALUES 'Max', 'pass";
@@ -61,18 +75,22 @@ std::string StrongMitigation(std::string input) {
 }
 
 
-void DisplayMenu() {
-
+std::string DisplayMenu() {
+    // just adding quick interface for testing.
+    std::string str_num;
+    std::cout << "\n\nEnter test #: ";
+    std::cin >> str_num;
+    return str_num;
 }
 
 
 int main()
 {
     std::string input = "";
-
+    
 
     do {
-        DisplayMenu();
+        input = DisplayMenu();
 
         if (input == "1") {
             ValidTests();
