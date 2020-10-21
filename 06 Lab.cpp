@@ -28,6 +28,15 @@ void UnionQueryAttackTests() {
 
 void AdditionalStatementAttackTests() {
 
+    //test #1. Deletes everything in the table Users.
+    std::string username = "user";
+    std::string password = "password'; DROP TABLE Users";
+    GetAuthenticationQuery(username, password);
+
+    //test #2. Inserts a new user to the database.
+    username = "user";
+    password = "password'; INSERT INTO Users (name, password) VALUES 'Max', 'pass";
+    GetAuthenticationQuery(username, password);
 }
 
 
