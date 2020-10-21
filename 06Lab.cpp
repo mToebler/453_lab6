@@ -1,7 +1,9 @@
 #include <iostream>
 #include <string>
 
+/* Why the uppercase function names? */
 
+// quick and dirty. I don't know who was doing this. Works. 
 std::string GetAuthenticationQuery(std::string username, std::string password) { 
     std::string query = "SELECT authenticate FROM passwordList WHERE name = '"
         + username + "' AND passwd = '"
@@ -87,10 +89,12 @@ std::string DisplayMenu() {
 int main()
 {
     std::string input = "";
-    
 
     do {
         input = DisplayMenu();
+
+        std:: cout << "Enter a number: ";
+        std::cin >> input;
 
         if (input == "1") {
             ValidTests();
