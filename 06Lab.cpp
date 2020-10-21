@@ -70,9 +70,11 @@ int main()
 {
     std::string input = "";
 
-
     do {
         DisplayMenu();
+
+        std:: cout << "Enter a number: ";
+        std::cin >> input;
 
         if (input == "1") {
             ValidTests();
