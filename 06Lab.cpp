@@ -175,7 +175,7 @@ std::string DisplayMenu() {
     // just adding quick interface for testing.
     std::string str_num;
 
-    std::cout << "\n\n***MENU***";
+    std::cout << "\n\n*** MENU ***";
     std::cout << "\n1 - Valid Tests";
     std::cout << "\n2 - Tautology Attack Tests";
     std::cout << "\n3 - Union Query Attack Tests";
@@ -197,9 +197,6 @@ int main()
 
     do {
         input = DisplayMenu();
-        
-        // std:: cout << "Enter a number: ";
-        // std::cin >> input;
 
         if (input == "1") {
             ValidTests();
