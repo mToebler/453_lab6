@@ -154,14 +154,15 @@ void UnionQueryAttackTests() {
 void AdditionalStatementAttackTests() {
     std::cout << "****ADDITIONAL STATEMENT****" << std::endl << std::endl;
 
-    //test #1. Deletes everything in the table Users.
+    //Test #1. Changes the password of Admin account to something simple so that the attacker can 
+    //get into the system as an administrator.
     std::string username = "user";
-    std::string password = "password'; DROP TABLE Users";
+    std::string password = "password'; update passwordList set password='12345' where user='admin";
     RunTest(username, password);
     
-    //test #2. Inserts a new user to the database.
+    //Test #2. Inserts a new user to the database.
     username = "user";
-    password = "password'; INSERT INTO Users (name, password) VALUES 'Max', 'pass";
+    password = "password'; INSERT INTO passwordList (name, password) VALUES 'Max', 'pass";
     RunTest(username, password);
 }
 
