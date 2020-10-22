@@ -129,7 +129,17 @@ void ValidTests() {
 
 
 void TautologyAttackTests() {
-    std::cout << "****TAUTOLOGY - UNDER CONSTRUCTION****" << std::endl << std::endl;
+    std::cout << "****TAUTOLOGY****" << std::endl << std::endl;
+    //Test #1
+    //Creates a statememt that is always true.
+    std::string username = "nothing";
+    std::string password = "password' OR 'p' = 'p";
+    RunTest(username, password);
+
+    //Test #2
+    username = "admin' OR 'root' = 'root";
+    password = "anything' OR 'x' = 'x";
+    RunTest(username, password);
 }
 
 
