@@ -41,8 +41,8 @@ std::pair<std::string, std::string> WeakMitigation(std::pair<std::string, std::s
     return sanitizedInput;
 }
 
-// Helper utility. Returns toTokenize as a vector of 
-// individual strings in the supplied call by reference vector
+// Helper utility. Returns param:toTokenize as a vector of 
+// individual strings in the supplied vector (call by referenced)
 std::vector<std::string> tokenize(std::string toTokenize, std::vector<std::string>& tokens) {
     std::string tmp;
     std::stringstream sstream(toTokenize);
