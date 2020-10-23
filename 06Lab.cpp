@@ -31,13 +31,15 @@ std::pair<std::string, std::string> WeakMitigation(std::pair<std::string, std::s
     // Deconstruct the pair of inputs
     std::string unsanitizedUsername = std::get<0>(unsanitizedInput);
     std::string unsanitizedPassword = std::get<1>(unsanitizedInput);
+
+    // Use this variable to pass in all the symbols declared in the SYMBOLS array
+    std::vector<std::string> v_symbols(SYMBOLS, SYMBOLS + (sizeof(SYMBOLS)/sizeof(SYMBOLS[0])));
     
-    // FIXME Sanitize the inputs
-    std::string sanitizedUsername = "weak_" + unsanitizedUsername;
-    std::string sanitizedPassword = "weak_" + unsanitizedPassword;
+    removeSymbols(unsanitizedUsername, v_symbols);
+    removeSymbols(unsanitizedPassword, v_symbols);
 
     // Put results back into a pair and send it off
-    std::pair<std::string, std::string> sanitizedInput (sanitizedUsername, sanitizedPassword);
+    std::pair<std::string, std::string> sanitizedInput (unsanitizedUsername, unsanitizedPassword);
     return sanitizedInput;
 }
 
