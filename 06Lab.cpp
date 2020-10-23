@@ -1,5 +1,18 @@
 #include <iostream>
 #include <string>
+#include <vector>
+#include <sstream>
+
+static std::string WHITE_LIST [] = {
+            "ABS","ADD","ALTER","ALL","AND","ANY","AS","ASC","BACKUP","BEFORE","BEGIN","BETWEEN","BY","CALL","CASE","CAST","CHECK","COLLATE","COLUMN","COUNT","COMMIT","CONSTRAINT","CREATE","CROSS","CURRENT","CURSOR",
+            "DATABASE","DEALLOCATE","DECLARE","DESCRIBE","DEFAULT","DELETE","DESC","DISTINCT","DROP","ELSE","END","ESCAPE","EXEC","EXECUTE","EXISTS","FALSE","FETCH","FOREIGN","FROM","FULL","FUNCTION",
+            "GET","GLOBAL","GRANT","GROUP","HAVING","HOLD","IN","INTO","INDEX","INNER","INSERT","IS","JOIN",
+            "LEFT","LIKE","LIMIT","MATCH","MODIFIES","NEW","NEXT","NO","NOT","NULL","OR","ON","OLD","OR","ORDER","OUTER",
+            "PRIMARY","PROCEDURE","RELEASE","RESULT","RETURN","RIGHT","ROLLBACK","ROW","ROWNUM","SELECT","SET","SOME","SQL","START",
+            "TABLE","THEN","TO","TOP","TREAT","TRUE","TRUNCATE","UNION","UNION","UNIQUE","UNKNOWN","UPDATE","USING","VALUE","VALUES","VIEW","WITH","WITHIN","WITHOUT","WHEN","WHERE","WHILE"
+    };
+
+std::string SYMBOLS [] = {"'", "\"", "-", ";", "=", ">", "<", "%", "?", "&"};
 
 /* Why the uppercase function names?
  *  I thought that was C++ convention :P
@@ -28,15 +41,88 @@ std::pair<std::string, std::string> WeakMitigation(std::pair<std::string, std::s
     return sanitizedInput;
 }
 
+// Helper utility. Returns toTokenize as a vector of 
+// individual strings in the supplied call by reference vector
+std::vector<std::string> tokenize(std::string toTokenize, std::vector<std::string>& tokens) {
+    std::string tmp;
+    std::stringstream sstream(toTokenize);
+    while (std::getline(sstream, tmp, ' '))
+    {
+        tokens.push_back(tmp);
+    }
+    return tokens;
+}
 
+
+// Removes unsafe tokens from a string vector if contained in 
+// whitelist (blacklist?). Uses binary_search log(n) complexity.
+void sanitize(std::vector<std::string> v_unsafe, 
+              std::vector<std::string> v_whitelist, 
+              std::string& sanitizedUsername) {
+    // using binary search on sorted v_whitelist for each token in v_unsafe
+    for (int i = 0; i < v_unsafe.size(); i++) {
+        if(! std::binary_search(v_whitelist.begin(), v_whitelist.end(), v_unsafe[i]))
+            sanitizedUsername = sanitizedUsername + " " + v_unsafe[i];
+#ifdef TEST 
+        else
+            std::cout << "skipping: " + v_unsafe[i] + "\n";
+#endif
+    }
+
+}
+
+// Removes symbols. This can be modified for the backbone of weakMitigation()
+// Reference: unsafe is changed!
+void removeSymbols(std::string& unsafe, std::vector<std::string> symbols){
+#ifdef TEST
+    std::cout << "\nBefore: " + unsafe + "\n";
+#endif
+    for (int i = 0; i < symbols.size(); i++)
+        unsafe.erase(remove(unsafe.begin(), unsafe.end(), symbols[i][0]), unsafe.end());
+#ifdef TEST
+    std::cout << "After: " + unsafe + "\n";
+#endif
+}
+
+// Calls weakMitigation() then sanitizes the result of unsafe tokens
 std::pair<std::string, std::string> StrongMitigation(std::pair<std::string, std::string> unsanitizedInput) {
+    int wlSize = sizeof(WHITE_LIST)/sizeof(WHITE_LIST[0]);
+
+    std::vector<std::string> v_unsafeName;
+    std::vector<std::string> v_unsafePW;
+    std::vector<std::string> v_whitelist(WHITE_LIST, WHITE_LIST+wlSize-1);
+    // this should happen elsewhere, like main?
+    std::sort(v_whitelist.begin(), v_whitelist.end());
+
+#ifdef SANITY
+    std::cout << "v_whitelist contains:";
+    for (std::vector<std::string>::iterator it=v_whitelist.begin(); it!=v_whitelist.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+#endif
+
     // Deconstruct the pair of inputs
     std::string unsanitizedUsername = std::get<0>(unsanitizedInput);
     std::string unsanitizedPassword = std::get<1>(unsanitizedInput);
+    std::string sanitizedUsername = "";
+    std::string sanitizedPassword = "";
 
-    // FIXME Sanitize the inputs
-    std::string sanitizedUsername = "strong_" + unsanitizedUsername;
-    std::string sanitizedPassword = "strong_" + unsanitizedPassword;
+    // Let the mitigating begin:
+    // need to first remove any symbols
+    // TODO: This is where weakMitigation() would be called
+    int v_symSize = sizeof(SYMBOLS)/sizeof(SYMBOLS[0]);
+    std::vector<std::string> v_symbols(SYMBOLS, SYMBOLS + v_symSize-1);
+    removeSymbols(unsanitizedUsername, v_symbols);
+    removeSymbols(unsanitizedPassword, v_symbols);
+    // for each unsanitized string, tokenize words and store in a vector
+    tokenize(unsanitizedUsername, v_unsafeName);
+    tokenize(unsanitizedPassword, v_unsafePW);
+    // now sanitize each vector according to the whitelist
+    sanitize(v_unsafeName, v_whitelist, sanitizedUsername);
+    sanitize(v_unsafePW, v_whitelist, sanitizedPassword);
+
+    // sanitizedUsername = "strong_" + unsanitizedUsername;
+    // std::string sanitizedPassword = "strong_" + unsanitizedPassword;
 
     // Put results back into a pair and send it off
     std::pair<std::string, std::string> sanitizedInput(sanitizedUsername, sanitizedPassword);
@@ -244,7 +330,7 @@ int main()
 
     } while (input != "6");
 
-    std::cout << "\n\nThank you for testing!";
+    std::cout << "\n\nThank you for testing!\n";
 
     return 0;
 }
