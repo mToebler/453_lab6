@@ -14,20 +14,32 @@ std::string GetAuthenticationQuery(std::string username, std::string password) {
 }
 
 
-std::string WeakMitigation(std::string input) {
-    std::string sanitizedInput = "weak_";
+std::pair<std::string, std::string> WeakMitigation(std::pair<std::string, std::string> unsanitizedInput) {
+    // Deconstruct the pair of inputs
+    std::string unsanitizedUsername = std::get<0>(unsanitizedInput);
+    std::string unsanitizedPassword = std::get<1>(unsanitizedInput);
+    
+    // FIXME Sanitize the inputs
+    std::string sanitizedUsername = "weak_" + unsanitizedUsername;
+    std::string sanitizedPassword = "weak_" + unsanitizedPassword;
 
-    sanitizedInput += input;
-
+    // Put results back into a pair and send it off
+    std::pair<std::string, std::string> sanitizedInput (sanitizedUsername, sanitizedPassword);
     return sanitizedInput;
 }
 
 
-std::string StrongMitigation(std::string input) {
-    std::string sanitizedInput = "strong_";
+std::pair<std::string, std::string> StrongMitigation(std::pair<std::string, std::string> unsanitizedInput) {
+    // Deconstruct the pair of inputs
+    std::string unsanitizedUsername = std::get<0>(unsanitizedInput);
+    std::string unsanitizedPassword = std::get<1>(unsanitizedInput);
 
-    sanitizedInput += input;
+    // FIXME Sanitize the inputs
+    std::string sanitizedUsername = "strong_" + unsanitizedUsername;
+    std::string sanitizedPassword = "strong_" + unsanitizedPassword;
 
+    // Put results back into a pair and send it off
+    std::pair<std::string, std::string> sanitizedInput(sanitizedUsername, sanitizedPassword);
     return sanitizedInput;
 }
 
@@ -40,12 +52,16 @@ void RunTest(std::string unsanitizedUsername, std::string unsanitizedPassword) {
     std::cout << "query:" << GetAuthenticationQuery(unsanitizedUsername,
         unsanitizedPassword) << std::endl << std::endl << std::endl;
 
+    // Pair up the inputs to prepare for mitigation
+    std::pair<std::string, std::string> unsanitizedInput(unsanitizedUsername, unsanitizedPassword);
+
     // Sanitize and Display New Inputs and Query
     std::cout << "**Sanitized**" << std::endl;
 
     // Weak Mitigation
-    std::string weaklySanitizedUsername = WeakMitigation(unsanitizedUsername);
-    std::string weaklySanitizedPassword = WeakMitigation(unsanitizedPassword);
+    std::pair<std::string, std::string> weaklySanitizedInput = WeakMitigation(unsanitizedInput);
+    std::string weaklySanitizedUsername = std::get<0>(weaklySanitizedInput);
+    std::string weaklySanitizedPassword = std::get<1>(weaklySanitizedInput);
     std::cout << "*Weak Mitigation*" << std::endl;
     std::cout << "username: " << weaklySanitizedUsername << std::endl;
     std::cout << "password: " << weaklySanitizedPassword << std::endl;
@@ -53,8 +69,9 @@ void RunTest(std::string unsanitizedUsername, std::string unsanitizedPassword) {
         weaklySanitizedPassword) << std::endl << std::endl;
 
     // Strong Mitigation
-    std::string stronglySanitizedUsername = StrongMitigation(unsanitizedUsername);
-    std::string stronglySanitizedPassword = StrongMitigation(unsanitizedPassword);
+    std::pair<std::string, std::string> stronglySanitizedInput = StrongMitigation(unsanitizedInput);
+    std::string stronglySanitizedUsername = std::get<0>(stronglySanitizedInput);
+    std::string stronglySanitizedPassword = std::get<1>(stronglySanitizedInput);
     std::cout << "*Strong Mitigation*" << std::endl;
     std::cout << "username: " << stronglySanitizedUsername << std::endl;
     std::cout << "password: " << stronglySanitizedPassword << std::endl;
