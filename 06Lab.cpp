@@ -62,7 +62,7 @@ void sanitize(std::vector<std::string> v_unsafe,
     // using binary search on sorted v_whitelist for each token in v_unsafe
     for (int i = 0; i < v_unsafe.size(); i++) {
         if(! std::binary_search(v_whitelist.begin(), v_whitelist.end(), v_unsafe[i]))
-            sanitizedUsername = sanitizedUsername + " " + v_unsafe[i];
+            sanitizedUsername = i == 0 ? v_unsafe[i] : sanitizedUsername + " " + v_unsafe[i];
 #ifdef TEST 
         else
             std::cout << "skipping: " + v_unsafe[i] + "\n";
