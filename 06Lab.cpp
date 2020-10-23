@@ -27,22 +27,6 @@ std::string GetAuthenticationQuery(std::string username, std::string password) {
 }
 
 
-std::pair<std::string, std::string> WeakMitigation(std::pair<std::string, std::string> unsanitizedInput) {
-    // Deconstruct the pair of inputs
-    std::string unsanitizedUsername = std::get<0>(unsanitizedInput);
-    std::string unsanitizedPassword = std::get<1>(unsanitizedInput);
-
-    // Use this variable to pass in all the symbols declared in the SYMBOLS array
-    std::vector<std::string> v_symbols(SYMBOLS, SYMBOLS + (sizeof(SYMBOLS)/sizeof(SYMBOLS[0])));
-    
-    removeSymbols(unsanitizedUsername, v_symbols);
-    removeSymbols(unsanitizedPassword, v_symbols);
-
-    // Put results back into a pair and send it off
-    std::pair<std::string, std::string> sanitizedInput (unsanitizedUsername, unsanitizedPassword);
-    return sanitizedInput;
-}
-
 // Helper utility. Returns param:toTokenize as a vector of 
 // individual strings in the supplied vector (call by referenced)
 std::vector<std::string> tokenize(std::string toTokenize, std::vector<std::string>& tokens) {
@@ -86,6 +70,22 @@ void removeSymbols(std::string& unsafe, std::vector<std::string> symbols){
 #endif
 }
 
+std::pair<std::string, std::string> WeakMitigation(std::pair<std::string, std::string> unsanitizedInput) {
+    // Deconstruct the pair of inputs
+    std::string unsanitizedUsername = std::get<0>(unsanitizedInput);
+    std::string unsanitizedPassword = std::get<1>(unsanitizedInput);
+
+    // Use this variable to pass in all the symbols declared in the SYMBOLS array
+    std::vector<std::string> v_symbols(SYMBOLS, SYMBOLS + (sizeof(SYMBOLS)/sizeof(SYMBOLS[0])));
+    
+    removeSymbols(unsanitizedUsername, v_symbols);
+    removeSymbols(unsanitizedPassword, v_symbols);
+
+    // Put results back into a pair and send it off
+    std::pair<std::string, std::string> sanitizedInput (unsanitizedUsername, unsanitizedPassword);
+    return sanitizedInput;
+}
+
 // Calls weakMitigation() then sanitizes the result of unsafe tokens
 std::pair<std::string, std::string> StrongMitigation(std::pair<std::string, std::string> unsanitizedInput) {
     int wlSize = sizeof(WHITE_LIST)/sizeof(WHITE_LIST[0]);
@@ -102,7 +102,8 @@ std::pair<std::string, std::string> StrongMitigation(std::pair<std::string, std:
         std::cout << ' ' << *it;
     std::cout << '\n';
 #endif
-
+    // call Weak Mitigation
+    unsanitizedInput = WeakMitigation(unsanitizedInput);
     // Deconstruct the pair of inputs
     std::string unsanitizedUsername = std::get<0>(unsanitizedInput);
     std::string unsanitizedPassword = std::get<1>(unsanitizedInput);
@@ -112,10 +113,11 @@ std::pair<std::string, std::string> StrongMitigation(std::pair<std::string, std:
     // Let the mitigating begin:
     // need to first remove any symbols
     // TODO: This is where weakMitigation() would be called
-    int v_symSize = sizeof(SYMBOLS)/sizeof(SYMBOLS[0]);
-    std::vector<std::string> v_symbols(SYMBOLS, SYMBOLS + v_symSize-1);
-    removeSymbols(unsanitizedUsername, v_symbols);
-    removeSymbols(unsanitizedPassword, v_symbols);
+    // int v_symSize = sizeof(SYMBOLS)/sizeof(SYMBOLS[0]);
+    // std::vector<std::string> v_symbols(SYMBOLS, SYMBOLS + v_symSize-1);
+    // removeSymbols(unsanitizedUsername, v_symbols);
+    // removeSymbols(unsanitizedPassword, v_symbols);
+    
     // for each unsanitized string, tokenize words and store in a vector
     tokenize(unsanitizedUsername, v_unsafeName);
     tokenize(unsanitizedPassword, v_unsafePW);
