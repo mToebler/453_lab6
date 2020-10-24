@@ -7,7 +7,7 @@
 static std::string SQL_ARRAY [] = {
             "ABS","ADD","ALTER","ALL","AND","ANY","AS","ASC","BACKUP","BEFORE","BEGIN","BETWEEN","BY","CALL","CASE","CAST","CHECK","COLLATE","COLUMN","COUNT","COMMIT","CONSTRAINT","CREATE","CROSS","CURRENT","CURSOR",
             "DATABASE","DEALLOCATE","DECLARE","DESCRIBE","DEFAULT","DELETE","DESC","DISTINCT","DROP","ELSE","END","ESCAPE","EXEC","EXECUTE","EXISTS","FALSE","FETCH","FOREIGN","FROM","FULL","FUNCTION",
-            "GET","GLOBAL","GRANT","GROUP","HAVING","HOLD","IN","INTO","INDEX","INNER","INSERT","IS","JOIN",
+            "GET","GLOBAL","GRANT","GROUP","HAVING","HOLD","IN","INDEX","INNER","INSERT","INTO","IS","JOIN",
             "LEFT","LIKE","LIMIT","MATCH","MODIFIES","NEW","NEXT","NO","NOT","NULL","OR","ON","OLD","OR","ORDER","OUTER",
             "PRIMARY","PROCEDURE","RELEASE","RESULT","RETURN","RIGHT","ROLLBACK","ROW","ROWNUM","SELECT","SET","SOME","SQL","START",
             "TABLE","THEN","TO","TOP","TREAT","TRUE","TRUNCATE","UNION","UNION","UNIQUE","UNKNOWN","UPDATE","USING","VALUE","VALUES","VIEW","WHEN","WHERE","WHILE","WITH","WITHIN","WITHOUT"
@@ -50,9 +50,34 @@ void sanitize(std::vector<std::string> v_unsafe,
 // removes any character not in the approved 
 // set AZaz09_ SPACE CRLF
 std::string removeInvalidChars(std::string unsafe) {
-    // using the string's iterators, use the C++11 for_each() to
+    // Use the string's iterators to
     // copy only chars within set{LF, CR, SPACE, 0-9, A-Z, _, a-z}
     // ASCII values of set: (10, 13, 32, 48-57, 65-90, 95, 97-122)
+    std::string safeStr = "";
+    // std::for_each(unsafe.begin(), unsafe.end(), copySafeChar);
+    for (std::string::const_iterator it = unsafe.cbegin(); it != unsafe.cend(); ++it) {
+        switch ((int)*it) {
+            case 10:         // LF
+            case 13:         // CR
+            case 32:         // SPACE
+            case 48 ... 57:  // 0 - 9
+            case 65 ... 90:  // A-Z
+            case 95:         // _
+            case 97 ... 122: // a-z
+                safeStr += (char)*it;
+                break;
+
+            default:
+                break;
+        };
+    }
+    return safeStr;
+}
+
+std::string removeSpaces(std::string unsafe) {
+    // using the string's iterators to
+    // copy only chars within set{LF, CR, 0-9, A-Z, _, a-z}
+    // ASCII values of set: (10, 13, 48-57, 65-90, 95, 97-122)
     std::string safeStr = "";
     // std::for_each(unsafe.begin(), unsafe.end(), copySafeChar);
     for (std::string::const_iterator it = unsafe.cbegin(); it != unsafe.cend(); ++it) {
@@ -73,6 +98,7 @@ std::string removeInvalidChars(std::string unsafe) {
     }
     return safeStr;
 }
+
 
 std::pair<std::string, std::string> weakMitigation(std::pair<std::string, std::string> unsanitizedInput) {
     // Deconstruct the pair of inputs
@@ -110,6 +136,9 @@ std::pair<std::string, std::string> strongMitigation(std::pair<std::string, std:
     // now sanitize each vector according to the sql command list
     sanitize(v_unsafeName, v_sqllist, sanitizedUsername);
     sanitize(v_unsafePW, v_sqllist, sanitizedPassword);
+    // remove spaces in a final pass
+    sanitizedUsername = removeSpaces(sanitizedUsername);
+    sanitizedPassword = removeSpaces(sanitizedPassword);
 
     // Put results back into a pair and send it off
     std::pair<std::string, std::string> sanitizedInput(sanitizedUsername, sanitizedPassword);

@@ -8,7 +8,7 @@
 5 - Comment Attack Tests
 6 - Quit
 
-Enter test #: 1 
+Enter test #: 1
 
 ****VALID****
 
@@ -251,13 +251,13 @@ query:SELECT authenticate FROM passwordList WHERE name = 'nothing' AND passwd = 
 **Sanitized**
 *Weak Mitigation*
 username: nothing
-password: passwordORpp
-query:SELECT authenticate FROM passwordList WHERE name = 'nothing' AND passwd = 'passwordORpp';
+password: password OR p  p
+query:SELECT authenticate FROM passwordList WHERE name = 'nothing' AND passwd = 'password OR p  p';
 
 *Strong Mitigation*
 username: nothing
-password: passwordORpp
-query:SELECT authenticate FROM passwordList WHERE name = 'nothing' AND passwd = 'passwordORpp';
+password: passwordpp
+query:SELECT authenticate FROM passwordList WHERE name = 'nothing' AND passwd = 'passwordpp';
 
 
 **Unsanitized**
@@ -268,14 +268,14 @@ query:SELECT authenticate FROM passwordList WHERE name = 'admin' OR 'root' = 'ro
 
 **Sanitized**
 *Weak Mitigation*
-username: adminORrootroot
-password: anythingORxx
-query:SELECT authenticate FROM passwordList WHERE name = 'adminORrootroot' AND passwd = 'anythingORxx';
+username: admin OR root  root
+password: anything OR x  x
+query:SELECT authenticate FROM passwordList WHERE name = 'admin OR root  root' AND passwd = 'anything OR x  x';
 
 *Strong Mitigation*
-username: adminORrootroot
-password: anythingORxx
-query:SELECT authenticate FROM passwordList WHERE name = 'adminORrootroot' AND passwd = 'anythingORxx';
+username: adminrootroot
+password: anythingxx
+query:SELECT authenticate FROM passwordList WHERE name = 'adminrootroot' AND passwd = 'anythingxx';
 
 
 
@@ -301,13 +301,13 @@ query:SELECT authenticate FROM passwordList WHERE name = 'some_user' AND passwd 
 **Sanitized**
 *Weak Mitigation*
 username: some_user
-password: passwordUNIONSELECTauthenticateFROMpasswordListWHEREpermissionLevel0andnamelike
-query:SELECT authenticate FROM passwordList WHERE name = 'some_user' AND passwd = 'passwordUNIONSELECTauthenticateFROMpasswordListWHEREpermissionLevel0andnamelike';
+password: password UNION SELECT authenticate FROM passwordList WHERE permissionLevel  0 and name like 
+query:SELECT authenticate FROM passwordList WHERE name = 'some_user' AND passwd = 'password UNION SELECT authenticate FROM passwordList WHERE permissionLevel  0 and name like ';
 
 *Strong Mitigation*
 username: some_user
-password: passwordUNIONSELECTauthenticateFROMpasswordListWHEREpermissionLevel0andnamelike
-query:SELECT authenticate FROM passwordList WHERE name = 'some_user' AND passwd = 'passwordUNIONSELECTauthenticateFROMpasswordListWHEREpermissionLevel0andnamelike';
+password: passwordauthenticatepasswordListpermissionLevel0andnamelike
+query:SELECT authenticate FROM passwordList WHERE name = 'some_user' AND passwd = 'passwordauthenticatepasswordListpermissionLevel0andnamelike';
 
 
 **Unsanitized**
@@ -319,13 +319,13 @@ query:SELECT authenticate FROM passwordList WHERE name = 'SYSTEM' AND passwd = '
 **Sanitized**
 *Weak Mitigation*
 username: SYSTEM
-password: plainTextPasswordUNIONSELECTauthenticateFROMpasswordListWHEREnameadmin
-query:SELECT authenticate FROM passwordList WHERE name = 'SYSTEM' AND passwd = 'plainTextPasswordUNIONSELECTauthenticateFROMpasswordListWHEREnameadmin';
+password: plainTextPassword UNION SELECT authenticate FROM passwordList WHERE name  admin
+query:SELECT authenticate FROM passwordList WHERE name = 'SYSTEM' AND passwd = 'plainTextPassword UNION SELECT authenticate FROM passwordList WHERE name  admin';
 
 *Strong Mitigation*
 username: SYSTEM
-password: plainTextPasswordUNIONSELECTauthenticateFROMpasswordListWHEREnameadmin
-query:SELECT authenticate FROM passwordList WHERE name = 'SYSTEM' AND passwd = 'plainTextPasswordUNIONSELECTauthenticateFROMpasswordListWHEREnameadmin';
+password: plainTextPasswordauthenticatepasswordListnameadmin
+query:SELECT authenticate FROM passwordList WHERE name = 'SYSTEM' AND passwd = 'plainTextPasswordauthenticatepasswordListnameadmin';
 
 
 
@@ -351,8 +351,8 @@ query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'pa
 **Sanitized**
 *Weak Mitigation*
 username: user
-password: passwordupdatepasswordListsetpassword12345whereuseradmin
-query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'passwordupdatepasswordListsetpassword12345whereuseradmin';
+password: password update passwordList set password12345 where useradmin
+query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'password update passwordList set password12345 where useradmin';
 
 *Strong Mitigation*
 username: user
@@ -369,13 +369,13 @@ query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'pa
 **Sanitized**
 *Weak Mitigation*
 username: user
-password: passwordINSERTINTOpasswordListnamepasswordVALUESMaxpass
-query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'passwordINSERTINTOpasswordListnamepasswordVALUESMaxpass';
+password: password INSERT INTO passwordList name password VALUES Max pass
+query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'password INSERT INTO passwordList name password VALUES Max pass';
 
 *Strong Mitigation*
 username: user
-password: passwordINSERTINTOpasswordListnamepasswordVALUESMaxpass
-query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'passwordINSERTINTOpasswordListnamepasswordVALUESMaxpass';
+password: passwordpasswordListnamepasswordMaxpass
+query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'passwordpasswordListnamepasswordMaxpass';
 
 
 
@@ -388,7 +388,7 @@ query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'pa
 5 - Comment Attack Tests
 6 - Quit
 
-Enter test #: 5
+Enter test #: 5 
 
 ****COMMENT ATTACK****
 
@@ -400,9 +400,9 @@ query:SELECT authenticate FROM passwordList WHERE name = 'user'; -- ' AND passwd
 
 **Sanitized**
 *Weak Mitigation*
-username: user
+username: user  
 password: password
-query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'password';
+query:SELECT authenticate FROM passwordList WHERE name = 'user  ' AND passwd = 'password';
 
 *Strong Mitigation*
 username: user
