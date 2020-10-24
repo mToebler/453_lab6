@@ -103,16 +103,13 @@ std::pair<std::string, std::string> strongMitigation(std::pair<std::string, std:
     std::string sanitizedUsername = "";
     std::string sanitizedPassword = "";
 
-    // Let the mitigating begin:
-    // need to first remove any symbols
+    // With symbols removed by weakMitigation, let the strong mitigating begin:
+    // convert the strings into token vectors
     tokenize(unsanitizedUsername, v_unsafeName);
     tokenize(unsanitizedPassword, v_unsafePW);
     // now sanitize each vector according to the sql command list
     sanitize(v_unsafeName, v_sqllist, sanitizedUsername);
     sanitize(v_unsafePW, v_sqllist, sanitizedPassword);
-
-    // sanitizedUsername = "strong_" + unsanitizedUsername;
-    // std::string sanitizedPassword = "strong_" + unsanitizedPassword;
 
     // Put results back into a pair and send it off
     std::pair<std::string, std::string> sanitizedInput(sanitizedUsername, sanitizedPassword);
