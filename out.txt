@@ -1,0 +1,427 @@
+
+
+*** MENU ***
+1 - Valid Tests
+2 - Tautology Attack Tests
+3 - Union Query Attack Tests
+4 - Additional Statement Attack Tests
+5 - Comment Attack Tests
+6 - Quit
+
+Enter test #: 1 
+
+****VALID****
+
+**Unsanitized**
+username: dmoster
+password: r3allygr8pw_
+query:SELECT authenticate FROM passwordList WHERE name = 'dmoster' AND passwd = 'r3allygr8pw_';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: dmoster
+password: r3allygr8pw_
+query:SELECT authenticate FROM passwordList WHERE name = 'dmoster' AND passwd = 'r3allygr8pw_';
+
+*Strong Mitigation*
+username: dmoster
+password: r3allygr8pw_
+query:SELECT authenticate FROM passwordList WHERE name = 'dmoster' AND passwd = 'r3allygr8pw_';
+
+
+**Unsanitized**
+username: mtobler
+password: awes0me_hat
+query:SELECT authenticate FROM passwordList WHERE name = 'mtobler' AND passwd = 'awes0me_hat';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: mtobler
+password: awes0me_hat
+query:SELECT authenticate FROM passwordList WHERE name = 'mtobler' AND passwd = 'awes0me_hat';
+
+*Strong Mitigation*
+username: mtobler
+password: awes0me_hat
+query:SELECT authenticate FROM passwordList WHERE name = 'mtobler' AND passwd = 'awes0me_hat';
+
+
+**Unsanitized**
+username: michaela
+password: alm0stDone
+query:SELECT authenticate FROM passwordList WHERE name = 'michaela' AND passwd = 'alm0stDone';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: michaela
+password: alm0stDone
+query:SELECT authenticate FROM passwordList WHERE name = 'michaela' AND passwd = 'alm0stDone';
+
+*Strong Mitigation*
+username: michaela
+password: alm0stDone
+query:SELECT authenticate FROM passwordList WHERE name = 'michaela' AND passwd = 'alm0stDone';
+
+
+**Unsanitized**
+username: mkarki
+password: _multi1ingu4l
+query:SELECT authenticate FROM passwordList WHERE name = 'mkarki' AND passwd = '_multi1ingu4l';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: mkarki
+password: _multi1ingu4l
+query:SELECT authenticate FROM passwordList WHERE name = 'mkarki' AND passwd = '_multi1ingu4l';
+
+*Strong Mitigation*
+username: mkarki
+password: _multi1ingu4l
+query:SELECT authenticate FROM passwordList WHERE name = 'mkarki' AND passwd = '_multi1ingu4l';
+
+
+**Unsanitized**
+username: msalyards
+password: _cod3Wiz4rd_
+query:SELECT authenticate FROM passwordList WHERE name = 'msalyards' AND passwd = '_cod3Wiz4rd_';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: msalyards
+password: _cod3Wiz4rd_
+query:SELECT authenticate FROM passwordList WHERE name = 'msalyards' AND passwd = '_cod3Wiz4rd_';
+
+*Strong Mitigation*
+username: msalyards
+password: _cod3Wiz4rd_
+query:SELECT authenticate FROM passwordList WHERE name = 'msalyards' AND passwd = '_cod3Wiz4rd_';
+
+
+**Unsanitized**
+username: tbeeson
+password: w0rdSm1th_
+query:SELECT authenticate FROM passwordList WHERE name = 'tbeeson' AND passwd = 'w0rdSm1th_';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: tbeeson
+password: w0rdSm1th_
+query:SELECT authenticate FROM passwordList WHERE name = 'tbeeson' AND passwd = 'w0rdSm1th_';
+
+*Strong Mitigation*
+username: tbeeson
+password: w0rdSm1th_
+query:SELECT authenticate FROM passwordList WHERE name = 'tbeeson' AND passwd = 'w0rdSm1th_';
+
+
+**Unsanitized**
+username: sp3ctre
+password: asdf456__
+query:SELECT authenticate FROM passwordList WHERE name = 'sp3ctre' AND passwd = 'asdf456__';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: sp3ctre
+password: asdf456__
+query:SELECT authenticate FROM passwordList WHERE name = 'sp3ctre' AND passwd = 'asdf456__';
+
+*Strong Mitigation*
+username: sp3ctre
+password: asdf456__
+query:SELECT authenticate FROM passwordList WHERE name = 'sp3ctre' AND passwd = 'asdf456__';
+
+
+**Unsanitized**
+username: w4lking_be4r
+password: a1b2c3d4_e_f_g
+query:SELECT authenticate FROM passwordList WHERE name = 'w4lking_be4r' AND passwd = 'a1b2c3d4_e_f_g';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: w4lking_be4r
+password: a1b2c3d4_e_f_g
+query:SELECT authenticate FROM passwordList WHERE name = 'w4lking_be4r' AND passwd = 'a1b2c3d4_e_f_g';
+
+*Strong Mitigation*
+username: w4lking_be4r
+password: a1b2c3d4_e_f_g
+query:SELECT authenticate FROM passwordList WHERE name = 'w4lking_be4r' AND passwd = 'a1b2c3d4_e_f_g';
+
+
+**Unsanitized**
+username: rad_dad73
+password: rUbIks_CuB3
+query:SELECT authenticate FROM passwordList WHERE name = 'rad_dad73' AND passwd = 'rUbIks_CuB3';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: rad_dad73
+password: rUbIks_CuB3
+query:SELECT authenticate FROM passwordList WHERE name = 'rad_dad73' AND passwd = 'rUbIks_CuB3';
+
+*Strong Mitigation*
+username: rad_dad73
+password: rUbIks_CuB3
+query:SELECT authenticate FROM passwordList WHERE name = 'rad_dad73' AND passwd = 'rUbIks_CuB3';
+
+
+**Unsanitized**
+username: TennesseeErnieFord
+password: _16tons
+query:SELECT authenticate FROM passwordList WHERE name = 'TennesseeErnieFord' AND passwd = '_16tons';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: TennesseeErnieFord
+password: _16tons
+query:SELECT authenticate FROM passwordList WHERE name = 'TennesseeErnieFord' AND passwd = '_16tons';
+
+*Strong Mitigation*
+username: TennesseeErnieFord
+password: _16tons
+query:SELECT authenticate FROM passwordList WHERE name = 'TennesseeErnieFord' AND passwd = '_16tons';
+
+
+**Unsanitized**
+username: gandalf_greyy
+password: _n3v3r_l8_
+query:SELECT authenticate FROM passwordList WHERE name = 'gandalf_greyy' AND passwd = '_n3v3r_l8_';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: gandalf_greyy
+password: _n3v3r_l8_
+query:SELECT authenticate FROM passwordList WHERE name = 'gandalf_greyy' AND passwd = '_n3v3r_l8_';
+
+*Strong Mitigation*
+username: gandalf_greyy
+password: _n3v3r_l8_
+query:SELECT authenticate FROM passwordList WHERE name = 'gandalf_greyy' AND passwd = '_n3v3r_l8_';
+
+
+**Unsanitized**
+username: _g4ndalfWhite
+password: Balr0gz_Bane3000
+query:SELECT authenticate FROM passwordList WHERE name = '_g4ndalfWhite' AND passwd = 'Balr0gz_Bane3000';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: _g4ndalfWhite
+password: Balr0gz_Bane3000
+query:SELECT authenticate FROM passwordList WHERE name = '_g4ndalfWhite' AND passwd = 'Balr0gz_Bane3000';
+
+*Strong Mitigation*
+username: _g4ndalfWhite
+password: Balr0gz_Bane3000
+query:SELECT authenticate FROM passwordList WHERE name = '_g4ndalfWhite' AND passwd = 'Balr0gz_Bane3000';
+
+
+
+
+*** MENU ***
+1 - Valid Tests
+2 - Tautology Attack Tests
+3 - Union Query Attack Tests
+4 - Additional Statement Attack Tests
+5 - Comment Attack Tests
+6 - Quit
+
+Enter test #: 2 
+
+****TAUTOLOGY****
+
+**Unsanitized**
+username: nothing
+password: password' OR 'p' = 'p
+query:SELECT authenticate FROM passwordList WHERE name = 'nothing' AND passwd = 'password' OR 'p' = 'p';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: nothing
+password: password OR p  p
+query:SELECT authenticate FROM passwordList WHERE name = 'nothing' AND passwd = 'password OR p  p';
+
+*Strong Mitigation*
+username: nothing
+password: password p  p
+query:SELECT authenticate FROM passwordList WHERE name = 'nothing' AND passwd = 'password p  p';
+
+
+**Unsanitized**
+username: admin' OR 'root' = 'root
+password: anything' OR 'x' = 'x
+query:SELECT authenticate FROM passwordList WHERE name = 'admin' OR 'root' = 'root' AND passwd = 'anything' OR 'x' = 'x';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: admin OR root  root
+password: anything OR x  x
+query:SELECT authenticate FROM passwordList WHERE name = 'admin OR root  root' AND passwd = 'anything OR x  x';
+
+*Strong Mitigation*
+username: admin root  root
+password: anything x  x
+query:SELECT authenticate FROM passwordList WHERE name = 'admin root  root' AND passwd = 'anything x  x';
+
+
+
+
+*** MENU ***
+1 - Valid Tests
+2 - Tautology Attack Tests
+3 - Union Query Attack Tests
+4 - Additional Statement Attack Tests
+5 - Comment Attack Tests
+6 - Quit
+
+Enter test #: 3
+
+****UNION QUERY****
+
+**Unsanitized**
+username: some_user
+password: password' UNION SELECT authenticate FROM passwordList WHERE permissionLevel > 0 and name like '%
+query:SELECT authenticate FROM passwordList WHERE name = 'some_user' AND passwd = 'password' UNION SELECT authenticate FROM passwordList WHERE permissionLevel > 0 and name like '%';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: some_user
+password: password UNION SELECT authenticate FROM passwordList WHERE permissionLevel  0 and name like 
+query:SELECT authenticate FROM passwordList WHERE name = 'some_user' AND passwd = 'password UNION SELECT authenticate FROM passwordList WHERE permissionLevel  0 and name like ';
+
+*Strong Mitigation*
+username: some_user
+password: password authenticate passwordList permissionLevel  0 and name like
+query:SELECT authenticate FROM passwordList WHERE name = 'some_user' AND passwd = 'password authenticate passwordList permissionLevel  0 and name like';
+
+
+**Unsanitized**
+username: SYSTEM
+password: plainTextPassword' UNION SELECT authenticate FROM passwordList WHERE name = 'admin
+query:SELECT authenticate FROM passwordList WHERE name = 'SYSTEM' AND passwd = 'plainTextPassword' UNION SELECT authenticate FROM passwordList WHERE name = 'admin';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: SYSTEM
+password: plainTextPassword UNION SELECT authenticate FROM passwordList WHERE name  admin
+query:SELECT authenticate FROM passwordList WHERE name = 'SYSTEM' AND passwd = 'plainTextPassword UNION SELECT authenticate FROM passwordList WHERE name  admin';
+
+*Strong Mitigation*
+username: SYSTEM
+password: plainTextPassword authenticate passwordList name  admin
+query:SELECT authenticate FROM passwordList WHERE name = 'SYSTEM' AND passwd = 'plainTextPassword authenticate passwordList name  admin';
+
+
+
+
+*** MENU ***
+1 - Valid Tests
+2 - Tautology Attack Tests
+3 - Union Query Attack Tests
+4 - Additional Statement Attack Tests
+5 - Comment Attack Tests
+6 - Quit
+
+Enter test #: 4 
+
+****ADDITIONAL STATEMENT****
+
+**Unsanitized**
+username: user
+password: password'; update passwordList set password='12345' where user='admin
+query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'password'; update passwordList set password='12345' where user='admin';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: user
+password: password update passwordList set password12345 where useradmin
+query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'password update passwordList set password12345 where useradmin';
+
+*Strong Mitigation*
+username: user
+password: password update passwordList set password12345 where useradmin
+query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'password update passwordList set password12345 where useradmin';
+
+
+**Unsanitized**
+username: user
+password: password'; INSERT INTO passwordList (name, password) VALUES 'Max', 'pass
+query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'password'; INSERT INTO passwordList (name, password) VALUES 'Max', 'pass';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: user
+password: password INSERT INTO passwordList name password VALUES Max pass
+query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'password INSERT INTO passwordList name password VALUES Max pass';
+
+*Strong Mitigation*
+username: user
+password: password INTO passwordList name password Max pass
+query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'password INTO passwordList name password Max pass';
+
+
+
+
+*** MENU ***
+1 - Valid Tests
+2 - Tautology Attack Tests
+3 - Union Query Attack Tests
+4 - Additional Statement Attack Tests
+5 - Comment Attack Tests
+6 - Quit
+
+Enter test #: 5
+
+****COMMENT ATTACK****
+
+**Unsanitized**
+username: user'; -- 
+password: password
+query:SELECT authenticate FROM passwordList WHERE name = 'user'; -- ' AND passwd = 'password';
+
+
+**Sanitized**
+*Weak Mitigation*
+username: user  
+password: password
+query:SELECT authenticate FROM passwordList WHERE name = 'user  ' AND passwd = 'password';
+
+*Strong Mitigation*
+username: user 
+password: password
+query:SELECT authenticate FROM passwordList WHERE name = 'user ' AND passwd = 'password';
+
+
+
+
+*** MENU ***
+1 - Valid Tests
+2 - Tautology Attack Tests
+3 - Union Query Attack Tests
+4 - Additional Statement Attack Tests
+5 - Comment Attack Tests
+6 - Quit
+
+Enter test #: 6
+
+
+
+Thank you for testing!
