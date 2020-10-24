@@ -35,6 +35,7 @@ std::pair<std::string, std::string> WeakMitigation(std::pair<std::string, std::s
     // Use this variable to pass in all the symbols declared in the SYMBOLS array
     std::vector<std::string> v_symbols(SYMBOLS, SYMBOLS + (sizeof(SYMBOLS)/sizeof(SYMBOLS[0])));
     
+    // Simply remove the symbols declared in the SYMBOLS array to weakly mitigate malicious input
     removeSymbols(unsanitizedUsername, v_symbols);
     removeSymbols(unsanitizedPassword, v_symbols);
 
