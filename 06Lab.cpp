@@ -273,8 +273,15 @@ void additionalStatementAttackTests() {
 }
 
 
+
 void commentAttackTests() {
-    std::cout << "****COMMENT - UNDER CONSTRUCTION****" << std::endl << std::endl;
+    std::cout << "****COMMENT ATTACK****" << std::endl << std::endl;
+
+    //Test #1. Inserts a comment to the end of the user so the program ignores the password prompt.
+    std::string username = "user'; -- ";
+    std::string password = "password";
+
+    runTest(username, password);
 }
 
 
