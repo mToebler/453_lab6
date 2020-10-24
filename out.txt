@@ -238,7 +238,7 @@ query:SELECT authenticate FROM passwordList WHERE name = '_g4ndalfWhite' AND pas
 5 - Comment Attack Tests
 6 - Quit
 
-Enter test #: 2 
+Enter test #: 2
 
 ****TAUTOLOGY****
 
@@ -251,13 +251,13 @@ query:SELECT authenticate FROM passwordList WHERE name = 'nothing' AND passwd = 
 **Sanitized**
 *Weak Mitigation*
 username: nothing
-password: password OR p  p
-query:SELECT authenticate FROM passwordList WHERE name = 'nothing' AND passwd = 'password OR p  p';
+password: passwordORpp
+query:SELECT authenticate FROM passwordList WHERE name = 'nothing' AND passwd = 'passwordORpp';
 
 *Strong Mitigation*
 username: nothing
-password: password p  p
-query:SELECT authenticate FROM passwordList WHERE name = 'nothing' AND passwd = 'password p  p';
+password: passwordORpp
+query:SELECT authenticate FROM passwordList WHERE name = 'nothing' AND passwd = 'passwordORpp';
 
 
 **Unsanitized**
@@ -268,14 +268,14 @@ query:SELECT authenticate FROM passwordList WHERE name = 'admin' OR 'root' = 'ro
 
 **Sanitized**
 *Weak Mitigation*
-username: admin OR root  root
-password: anything OR x  x
-query:SELECT authenticate FROM passwordList WHERE name = 'admin OR root  root' AND passwd = 'anything OR x  x';
+username: adminORrootroot
+password: anythingORxx
+query:SELECT authenticate FROM passwordList WHERE name = 'adminORrootroot' AND passwd = 'anythingORxx';
 
 *Strong Mitigation*
-username: admin root  root
-password: anything x  x
-query:SELECT authenticate FROM passwordList WHERE name = 'admin root  root' AND passwd = 'anything x  x';
+username: adminORrootroot
+password: anythingORxx
+query:SELECT authenticate FROM passwordList WHERE name = 'adminORrootroot' AND passwd = 'anythingORxx';
 
 
 
@@ -301,13 +301,13 @@ query:SELECT authenticate FROM passwordList WHERE name = 'some_user' AND passwd 
 **Sanitized**
 *Weak Mitigation*
 username: some_user
-password: password UNION SELECT authenticate FROM passwordList WHERE permissionLevel  0 and name like 
-query:SELECT authenticate FROM passwordList WHERE name = 'some_user' AND passwd = 'password UNION SELECT authenticate FROM passwordList WHERE permissionLevel  0 and name like ';
+password: passwordUNIONSELECTauthenticateFROMpasswordListWHEREpermissionLevel0andnamelike
+query:SELECT authenticate FROM passwordList WHERE name = 'some_user' AND passwd = 'passwordUNIONSELECTauthenticateFROMpasswordListWHEREpermissionLevel0andnamelike';
 
 *Strong Mitigation*
 username: some_user
-password: password authenticate passwordList permissionLevel  0 and name like
-query:SELECT authenticate FROM passwordList WHERE name = 'some_user' AND passwd = 'password authenticate passwordList permissionLevel  0 and name like';
+password: passwordUNIONSELECTauthenticateFROMpasswordListWHEREpermissionLevel0andnamelike
+query:SELECT authenticate FROM passwordList WHERE name = 'some_user' AND passwd = 'passwordUNIONSELECTauthenticateFROMpasswordListWHEREpermissionLevel0andnamelike';
 
 
 **Unsanitized**
@@ -319,13 +319,13 @@ query:SELECT authenticate FROM passwordList WHERE name = 'SYSTEM' AND passwd = '
 **Sanitized**
 *Weak Mitigation*
 username: SYSTEM
-password: plainTextPassword UNION SELECT authenticate FROM passwordList WHERE name  admin
-query:SELECT authenticate FROM passwordList WHERE name = 'SYSTEM' AND passwd = 'plainTextPassword UNION SELECT authenticate FROM passwordList WHERE name  admin';
+password: plainTextPasswordUNIONSELECTauthenticateFROMpasswordListWHEREnameadmin
+query:SELECT authenticate FROM passwordList WHERE name = 'SYSTEM' AND passwd = 'plainTextPasswordUNIONSELECTauthenticateFROMpasswordListWHEREnameadmin';
 
 *Strong Mitigation*
 username: SYSTEM
-password: plainTextPassword authenticate passwordList name  admin
-query:SELECT authenticate FROM passwordList WHERE name = 'SYSTEM' AND passwd = 'plainTextPassword authenticate passwordList name  admin';
+password: plainTextPasswordUNIONSELECTauthenticateFROMpasswordListWHEREnameadmin
+query:SELECT authenticate FROM passwordList WHERE name = 'SYSTEM' AND passwd = 'plainTextPasswordUNIONSELECTauthenticateFROMpasswordListWHEREnameadmin';
 
 
 
@@ -338,7 +338,7 @@ query:SELECT authenticate FROM passwordList WHERE name = 'SYSTEM' AND passwd = '
 5 - Comment Attack Tests
 6 - Quit
 
-Enter test #: 4 
+Enter test #: 4
 
 ****ADDITIONAL STATEMENT****
 
@@ -351,13 +351,13 @@ query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'pa
 **Sanitized**
 *Weak Mitigation*
 username: user
-password: password update passwordList set password12345 where useradmin
-query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'password update passwordList set password12345 where useradmin';
+password: passwordupdatepasswordListsetpassword12345whereuseradmin
+query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'passwordupdatepasswordListsetpassword12345whereuseradmin';
 
 *Strong Mitigation*
 username: user
-password: password update passwordList set password12345 where useradmin
-query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'password update passwordList set password12345 where useradmin';
+password: passwordupdatepasswordListsetpassword12345whereuseradmin
+query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'passwordupdatepasswordListsetpassword12345whereuseradmin';
 
 
 **Unsanitized**
@@ -369,13 +369,13 @@ query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'pa
 **Sanitized**
 *Weak Mitigation*
 username: user
-password: password INSERT INTO passwordList name password VALUES Max pass
-query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'password INSERT INTO passwordList name password VALUES Max pass';
+password: passwordINSERTINTOpasswordListnamepasswordVALUESMaxpass
+query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'passwordINSERTINTOpasswordListnamepasswordVALUESMaxpass';
 
 *Strong Mitigation*
 username: user
-password: password INTO passwordList name password Max pass
-query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'password INTO passwordList name password Max pass';
+password: passwordINSERTINTOpasswordListnamepasswordVALUESMaxpass
+query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'passwordINSERTINTOpasswordListnamepasswordVALUESMaxpass';
 
 
 
@@ -400,14 +400,14 @@ query:SELECT authenticate FROM passwordList WHERE name = 'user'; -- ' AND passwd
 
 **Sanitized**
 *Weak Mitigation*
-username: user  
+username: user
 password: password
-query:SELECT authenticate FROM passwordList WHERE name = 'user  ' AND passwd = 'password';
+query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'password';
 
 *Strong Mitigation*
-username: user 
+username: user
 password: password
-query:SELECT authenticate FROM passwordList WHERE name = 'user ' AND passwd = 'password';
+query:SELECT authenticate FROM passwordList WHERE name = 'user' AND passwd = 'password';
 
 
 

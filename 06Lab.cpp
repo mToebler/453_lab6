@@ -22,26 +22,6 @@ std::string getAuthenticationQuery(std::string username, std::string password) {
 }
 
 
-<<<<<<< HEAD
-std::pair<std::string, std::string> WeakMitigation(std::pair<std::string, std::string> unsanitizedInput) {
-    // Deconstruct the pair of inputs
-    std::string unsanitizedUsername = std::get<0>(unsanitizedInput);
-    std::string unsanitizedPassword = std::get<1>(unsanitizedInput);
-
-    // Use this variable to pass in all the symbols declared in the SYMBOLS array
-    std::vector<std::string> v_symbols(SYMBOLS, SYMBOLS + (sizeof(SYMBOLS)/sizeof(SYMBOLS[0])));
-    
-    // Simply remove the symbols declared in the SYMBOLS array to weakly mitigate malicious input
-    removeSymbols(unsanitizedUsername, v_symbols);
-    removeSymbols(unsanitizedPassword, v_symbols);
-
-    // Put results back into a pair and send it off
-    std::pair<std::string, std::string> sanitizedInput (unsanitizedUsername, unsanitizedPassword);
-    return sanitizedInput;
-}
-
-=======
->>>>>>> bca0eb98b3ee4841c4b45300dcd897825a62869a
 // Helper utility. Returns param:toTokenize as a vector of 
 // individual strings in the supplied vector (call by referenced)
 std::vector<std::string> tokenize(std::string toTokenize, std::vector<std::string>& tokens) {
@@ -79,7 +59,7 @@ std::string removeInvalidChars(std::string unsafe) {
         switch ((int)*it) {
             case 10:         // LF
             case 13:         // CR
-            case 32:         // SPACE
+            //case 32:         // SPACE
             case 48 ... 57:  // 0 - 9
             case 65 ... 90:  // A-Z
             case 95:         // _
