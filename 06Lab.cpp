@@ -4,7 +4,7 @@
 #include <sstream>
 #include <assert.h>
 
-static std::string WHITE_LIST [] = {
+static std::string SQL_ARRAY [] = {
             "ABS","ADD","ALTER","ALL","AND","ANY","AS","ASC","BACKUP","BEFORE","BEGIN","BETWEEN","BY","CALL","CASE","CAST","CHECK","COLLATE","COLUMN","COUNT","COMMIT","CONSTRAINT","CREATE","CROSS","CURRENT","CURSOR",
             "DATABASE","DEALLOCATE","DECLARE","DESCRIBE","DEFAULT","DELETE","DESC","DISTINCT","DROP","ELSE","END","ESCAPE","EXEC","EXECUTE","EXISTS","FALSE","FETCH","FOREIGN","FROM","FULL","FUNCTION",
             "GET","GLOBAL","GRANT","GROUP","HAVING","HOLD","IN","INTO","INDEX","INNER","INSERT","IS","JOIN",
@@ -36,13 +36,13 @@ std::vector<std::string> tokenize(std::string toTokenize, std::vector<std::strin
 
 
 // Removes unsafe tokens from a string vector if contained in 
-// whitelist (blacklist?). Uses binary_search log(n) complexity.
+// sql command list. Uses binary_search log(n) complexity.
 void sanitize(std::vector<std::string> v_unsafe, 
-              std::vector<std::string> v_whitelist, 
+              std::vector<std::string> v_sqlList, 
               std::string& sanitizedUsername) {
-    // using binary search on sorted v_whitelist for each token in v_unsafe
+    // using binary search on sorted v_sqlList for each token in v_unsafe
     for (int i = 0; i < v_unsafe.size(); i++) {
-        if(! std::binary_search(v_whitelist.begin(), v_whitelist.end(), v_unsafe[i]))
+        if(! std::binary_search(v_sqlList.begin(), v_sqlList.end(), v_unsafe[i]))
             sanitizedUsername = i == 0 ? v_unsafe[i] : sanitizedUsername + " " + v_unsafe[i];
     }
 }
@@ -89,14 +89,12 @@ std::pair<std::string, std::string> weakMitigation(std::pair<std::string, std::s
 
 // Calls weakMitigation() then sanitizes the result of unsafe tokens
 std::pair<std::string, std::string> strongMitigation(std::pair<std::string, std::string> unsanitizedInput) {
-    int wlSize = sizeof(WHITE_LIST)/sizeof(WHITE_LIST[0]);
+    int wlSize = sizeof(SQL_ARRAY)/sizeof(SQL_ARRAY[0]);
 
     std::vector<std::string> v_unsafeName;
     std::vector<std::string> v_unsafePW;
-    std::vector<std::string> v_whitelist(WHITE_LIST, WHITE_LIST+wlSize-1);
-    // should happen elsewhere, like main? the list is already sorted.
-    // std::sort(v_whitelist.begin(), v_whitelist.end());
-
+    std::vector<std::string> v_sqllist(SQL_ARRAY, SQL_ARRAY+wlSize-1);
+    
     // call Weak Mitigation
     unsanitizedInput = weakMitigation(unsanitizedInput);
     // Deconstruct the pair of inputs
@@ -107,12 +105,11 @@ std::pair<std::string, std::string> strongMitigation(std::pair<std::string, std:
 
     // Let the mitigating begin:
     // need to first remove any symbols
-    // TODO: This is where weakMitigation() would be called// for each unsanitized string, tokenize words and store in a vector
     tokenize(unsanitizedUsername, v_unsafeName);
     tokenize(unsanitizedPassword, v_unsafePW);
-    // now sanitize each vector according to the whitelist
-    sanitize(v_unsafeName, v_whitelist, sanitizedUsername);
-    sanitize(v_unsafePW, v_whitelist, sanitizedPassword);
+    // now sanitize each vector according to the sql command list
+    sanitize(v_unsafeName, v_sqllist, sanitizedUsername);
+    sanitize(v_unsafePW, v_sqllist, sanitizedPassword);
 
     // sanitizedUsername = "strong_" + unsanitizedUsername;
     // std::string sanitizedPassword = "strong_" + unsanitizedPassword;
@@ -308,7 +305,7 @@ std::string displayMenu() {
 int main()
 {
     // Let's make sure 
-    assert(std::is_sorted(WHITE_LIST->begin(), WHITE_LIST->end()));
+    assert(std::is_sorted(SQL_ARRAY->begin(), SQL_ARRAY->end()));
     std::string input = "";
 
     do {
