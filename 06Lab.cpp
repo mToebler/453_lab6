@@ -30,11 +30,11 @@ std::string GetAuthenticationQuery(std::string username, std::string password) {
 // Helper utility. Returns param:toTokenize as a vector of 
 // individual strings in the supplied vector (call by referenced)
 std::vector<std::string> tokenize(std::string toTokenize, std::vector<std::string>& tokens) {
-    std::string tmp;
+    std::string tempStr;
     std::stringstream sstream(toTokenize);
-    while (std::getline(sstream, tmp, ' '))
+    while (std::getline(sstream, tempStr, ' '))
     {
-        tokens.push_back(tmp);
+        tokens.push_back(tempStr);
     }
     return tokens;
 }
@@ -70,6 +70,33 @@ void removeSymbols(std::string& unsafe, std::vector<std::string> symbols){
 #endif
 }
 
+// removes any character not in the approved 
+// set AZaz09_ SPACE CRLF
+std::string removeInvalidChars(std::string unsafe) {
+    // using the string's iterators, use the C++11 for_each() to
+    // copy only chars within set{LF, CR, SPACE, 0-9, A-Z, _, a-z}
+    // ASCII values of set: (10, 13, 32, 48-57, 65-90, 95, 97-122)
+    std::string safeStr = "";
+    // std::for_each(unsafe.begin(), unsafe.end(), copySafeChar);
+    for (std::string::const_iterator it = unsafe.cbegin(); it != unsafe.cend(); ++it) {
+        switch ((int)*it) {
+            case 10:         // LF
+            case 13:         // CR
+            case 32:         // SPACE
+            case 48 ... 57:  // 0 - 9
+            case 65 ... 90:  // A-Z
+            case 95:         // _
+            case 97 ... 122: // a-z
+                safeStr += (char)*it;
+                break;
+
+            default:
+                break;
+        };
+    }
+    return safeStr;
+}
+
 std::pair<std::string, std::string> WeakMitigation(std::pair<std::string, std::string> unsanitizedInput) {
     // Deconstruct the pair of inputs
     std::string unsanitizedUsername = std::get<0>(unsanitizedInput);
@@ -78,11 +105,11 @@ std::pair<std::string, std::string> WeakMitigation(std::pair<std::string, std::s
     // Use this variable to pass in all the symbols declared in the SYMBOLS array
     std::vector<std::string> v_symbols(SYMBOLS, SYMBOLS + (sizeof(SYMBOLS)/sizeof(SYMBOLS[0])));
     
-    removeSymbols(unsanitizedUsername, v_symbols);
-    removeSymbols(unsanitizedPassword, v_symbols);
-
+    std::string sanitizedUsername = removeInvalidChars(unsanitizedUsername);
+    std::string sanitizedPassword = removeInvalidChars(unsanitizedPassword);
     // Put results back into a pair and send it off
-    std::pair<std::string, std::string> sanitizedInput (unsanitizedUsername, unsanitizedPassword);
+    std::pair<std::string, std::string>
+        sanitizedInput(sanitizedUsername, sanitizedPassword);
     return sanitizedInput;
 }
 
