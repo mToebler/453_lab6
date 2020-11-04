@@ -3,6 +3,7 @@
 #include <vector>
 #include <sstream>
 #include <assert.h>
+#include <algorithm>
 
 static std::string SQL_ARRAY [] = {
             "ABS","ADD","ALTER","ALL","AND","ANY","AS","ASC","BACKUP","BEFORE","BEGIN","BETWEEN","BY","CALL","CASE","CAST","CHECK","COLLATE","COLUMN","COUNT","COMMIT","CONSTRAINT","CREATE","CROSS","CURRENT","CURSOR",
