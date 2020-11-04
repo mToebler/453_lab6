@@ -42,7 +42,7 @@ void sanitize(std::vector<std::string> v_unsafe,
               std::vector<std::string> v_sqlList, 
               std::string& sanitizedUsername) {
     // using binary search on sorted v_sqlList for each token in v_unsafe
-    for (int i = 0; i < v_unsafe.size(); i++) {
+    for (int i = 0; i < (int)v_unsafe.size(); i++) {
         if(! std::binary_search(v_sqlList.begin(), v_sqlList.end(), v_unsafe[i]))
             sanitizedUsername = i == 0 ? v_unsafe[i] : sanitizedUsername + " " + v_unsafe[i];
     }
