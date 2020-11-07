@@ -13,7 +13,7 @@ static std::string SQL_ARRAY [] = {
             "TABLE","THEN","TO","TOP","TREAT","TRUE","TRUNCATE","UNION","UNION","UNIQUE","UNKNOWN","UPDATE","USING","VALUE","VALUES","VIEW","WHEN","WHERE","WHILE","WITH","WITHIN","WITHOUT"
     };
 
-// quick and dirty. I don't know who was doing this. Works. 
+// Receives user input for username and password and returns an SQL query string
 std::string getAuthenticationQuery(std::string username, std::string password) { 
     std::string query = "SELECT authenticate FROM passwordList WHERE name = '"
         + username + "' AND passwd = '"
